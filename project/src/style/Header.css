@@ -1,0 +1,60 @@
+
+.gmail-logo{
+    width: 109px;
+    height: 40px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.header-left{
+    display: flex;
+    align-items: center;
+}
+.header-left > img{
+    object-fit: contain;
+    height: 40px;
+    margin-left: 5px;
+}
+
+.header-middle{
+    display: flex;
+    align-items: center;
+    flex: 0.65;
+    background-color: #eaf1fb;
+    border: 1px solid #eaf1fb ;
+    border-radius: 10000px;
+
+}
+.header-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100px;
+}
+
+/*.profile-picture{*/
+/*    width: 100px;*/
+/*}*/
+
+.icons{
+    padding: 10px 20px;
+    background-color: transparent;
+    border-radius: inherit;
+
+}
+
+input{
+    background-color: transparent;
+    border-style: none;
+    width: 100%;
+    font-size: large;
+
+}
+input:focus{
+    outline: none;
+}

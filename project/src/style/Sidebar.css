@@ -1,0 +1,49 @@
+.SideBar{
+}
+
+
+.compose-button{
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    font-size: medium;
+    border-style: none;
+    background-color: #c2e7ff;
+    border-radius: 15px;
+}
+.compose-button:hover{
+    box-shadow: -7px 13px 60px -27px rgba(0,0,0,1);
+    -webkit-box-shadow: -7px 13px 60px -27px rgba(0,0,0,1);
+    -moz-box-shadow: -7px 13px 60px -27px rgba(0,0,0,1);
+}
+.compose-icon{
+    background-color: transparent;
+    margin-right: 5px;
+}
+
+.options-list{
+    padding-left: 20px ;
+}
+
+.options-list > li{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    font-size: medium;
+    margin-top: 20px;
+    width: 200px;
+
+}
+.list-icons{
+    margin-right: 15px;
+}
+.list-active{
+    background-color: #d3e3fd;
+    padding: 10px 0 5px 10px;
+    border-radius: 50px;
+    width: 100%;
+}
+.list-active > svg{
+    background-color: transparent;
+}
+
