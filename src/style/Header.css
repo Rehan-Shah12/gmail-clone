@@ -32,14 +32,19 @@
 }
 .header-right{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 100px;
+    width: auto;
+    margin-left: 100px;
+}
+.header-right > div > svg{
+    margin-right: 20px;
 }
 
-/*.profile-picture{*/
-/*    width: 100px;*/
-/*}*/
+.profile-picture{
+    width: 45px;
+    border-radius: 1000px;
+}
 
 .icons{
     padding: 10px 20px;

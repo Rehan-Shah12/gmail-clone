@@ -3,8 +3,12 @@ import { BiAbacus } from "react-icons/bi";
 import { IoSettingsOutline, IoHelpCircleOutline } from "react-icons/io5";
 import { TbGridDots } from "react-icons/tb";
 import '../style/Header.css'
+import {useSelector} from "react-redux";
 
 const Header = () => {
+
+    const user = useSelector((state) => state.auth.user)
+
     return (
         <div className='header'>
             <div className='header-left'>
@@ -19,12 +23,16 @@ const Header = () => {
 
             </div>
             <div className='header-right'>
+                <div >
                 <IoSettingsOutline size={25}/>
                 <IoHelpCircleOutline size={25} />
                 <TbGridDots size={25} />
-
-
+                </div>
+                <div>
+                    <img src={user.picture} alt='profile' className='profile-picture'/>
+                </div>
             </div>
+
         </div>
     )
 }
