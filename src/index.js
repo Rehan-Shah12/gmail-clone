@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom" ;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// added commit
 root.render(
     <Provider store={store}>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
