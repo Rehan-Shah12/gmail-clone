@@ -1,6 +1,5 @@
 import EmailItem from "./EmailItem";
 import {useDispatch, useSelector} from "react-redux";
-import {getMessageObject} from "../store/thunks/authThunk";
 import {useEffect, useState} from "react";
 
 
@@ -10,21 +9,36 @@ function EmailList(){
     const stateMessageObjects = useSelector(state => state.auth.messageObjects)
     const [rendered, setRendered] = useState([])
 
+    function getEmailSender(data) {
+        const fromObject = data.find(item => item.name === "From");
+
+        if (fromObject) {
+            const value = fromObject.value
+            return value.substring(0, value.indexOf('<'))
+        } else {
+
+            return "Sender not found";
+        }
+    }
+
 
 
     useEffect(() => {
 
-        console.log(stateMessageObjects)
+
         const renderedObjects = stateMessageObjects.map((message) => {
 
-            if (message?.snippet) {
-                return <EmailItem key={message.id} text={message.snippet} />;
+            const senderValue = getEmailSender(message.payload.headers)
+
+            if (message) {
+                return <EmailItem key={message.id} text={message.snippet} sender={senderValue} />;
             }
             return null;
         });
 
+        console.log(stateMessageObjects)
         setRendered(renderedObjects)
-    }, []);
+    }, [stateMessageObjects]);
 
 
 

@@ -19,5 +19,7 @@
 }
 
 .App-Body-Content{
-    padding-left: 50px;
+    background-color: white;
+    width: 80vw;
+    border-radius: 20px;
 }

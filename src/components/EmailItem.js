@@ -1,13 +1,12 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {getMessageObject} from "../store/thunks/authThunk";
+import "../style/EmailItem.css"
 
-function EmailItem({text}){
-
-
+function EmailItem({text, sender}){
 
     return(
-        <div className='EmailItem'><p>{text}</p></div>
+        <div className='EmailItem'>
+            <div className='sender-name'><p>{sender}</p></div>
+            <div className='snippet'><p>{text}</p></div>
+        </div>
     )
 }
 

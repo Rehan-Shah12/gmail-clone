@@ -1,0 +1,26 @@
+.EmailItem{
+    border-bottom: solid 1px rgb(160,160,255);
+    background-color: transparent;
+    display: flex;
+    font-size: small;
+
+}
+
+p{
+    max-width: 100ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sender-name{
+    max-width: 20ch;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 200px
+}
+
+.snippet{
+}
+

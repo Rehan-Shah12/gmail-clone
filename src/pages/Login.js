@@ -32,6 +32,7 @@ function Login() {
     useEffect(() => {
         if(user){
             console.log("Redirecting to App.js")
+            localStorage
             navigate("/home")
         }
     }, [user])
