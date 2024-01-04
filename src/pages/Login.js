@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGoogleLogin } from '@react-oauth/google';
 import {authenticateUser, getMessageList} from "../store/thunks/authThunk";
 import { useNavigate } from 'react-router-dom';
+import '../style/Login.css'
+import {setNextPageToken, setTokenObject} from "../store/slices/authSlice";
 
 function Login() {
 
@@ -15,7 +17,8 @@ function Login() {
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
             setTokenResponse(codeResponse);
-            // console.log(codeResponse)
+            dispatch(setTokenObject(codeResponse))
+
 
         },
         onError: (error) => console.log('Login Failed:', error),
@@ -23,24 +26,28 @@ function Login() {
     });
 
     useEffect(() => {
+        console.log("Login Response: ",tokenResponse)
         if (tokenResponse) {
             dispatch(authenticateUser(tokenResponse))
             dispatch(getMessageList(tokenResponse))
+
         }
     }, [tokenResponse, dispatch]);
 
     useEffect(() => {
         if(user){
             console.log("Redirecting to App.js")
-            localStorage
             navigate("/home")
         }
-    }, [user])
+    }, [user, tokenResponse])
 
 
     return (
-        <div>
-            <button onClick={login}>Sign in with Google</button>
+        <div className='Login'>
+            <div><h1>Welcome to Gmail</h1></div>
+            
+            <div><button onClick={login}>Enter Gmail✌</button></div>
+            
         </div>
     );
 }

@@ -1,0 +1,30 @@
+.Login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: #FAACA8;
+background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
+border-radius: 50px;
+
+    
+}
+
+h1{
+    font-size: 4rem;
+}
+
+.Login > button{
+    border: none;
+    padding: 30px;
+    font-size: 20px;
+   margin-bottom: 10rem;
+   background: rgb(113,112,126);
+background: radial-gradient(circle, rgba(113,112,126,1) 0%, rgba(39,38,38,1) 100%);
+   border-radius: 30px;
+   color: white;
+   font-weight: bold;
+}

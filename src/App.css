@@ -2,11 +2,12 @@
 
 *{
     font-family: 'Poppins', sans-serif;
-    background-color: #f6f8fc;
+    
 }
 .App{
     height: 100vh;
     margin: 3px 15px;
+    
 }
 
 .App-Body{

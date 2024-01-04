@@ -8,6 +8,14 @@ import {useSelector} from "react-redux";
 const Header = () => {
 
     const user = useSelector((state) => state.auth.user)
+    function picture(){
+        if(user){
+            return <img src={user.picture } alt='profile' className='profile-picture'/>
+        }
+        else{
+            return "No User"
+        }
+    }
 
     return (
         <div className='header'>
@@ -29,7 +37,9 @@ const Header = () => {
                 <TbGridDots size={25} />
                 </div>
                 <div>
-                    <img src={user.picture} alt='profile' className='profile-picture'/>
+
+                    {picture()}
+
                 </div>
             </div>
 

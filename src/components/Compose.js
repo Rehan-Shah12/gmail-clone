@@ -1,6 +1,6 @@
 function Compose(){
     return(
-        <div>Compose</div>
+        <div></div>
     )
 }
 

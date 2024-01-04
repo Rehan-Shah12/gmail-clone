@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Content from "./components/Content";
 import './App.css'
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import { useSelector } from 'react-redux';
+import EmailContent from './components/EmailContent';
 
 function App() {
 
+    const showEmailContent = useSelector((state) => state.auth.showEmailContent)
+
+    // useEffect(() => {
+    //     console.log(showEmailContent)
+    // }, [showEmailContent])
+    
 
 
     return (
@@ -19,8 +27,8 @@ function App() {
                         <Sidebar/>
                     </div>
                     <div className='App-Body-Content'>
-                        <Content/>
-                    </div>
+            {showEmailContent ? <EmailContent/> : <Content />}
+          </div>
                 </div>
 
             </div>

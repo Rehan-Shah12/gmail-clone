@@ -1,5 +1,14 @@
-import {setToken, setUser, setMessages, setMessageObject} from "../slices/authSlice";
+import {
+    setToken,
+    setUser,
+    setMessages,
+    setMessageObject,
+    setNextPageToken,
+    resetMessageObjects, setPreviousPageToken
+} from "../slices/authSlice";
 import axios from "axios";
+import {useSelector} from "react-redux";
+
 
 
 export const authenticateUser = (tokenResponse) => async(dispatch) => {
@@ -27,8 +36,46 @@ export const authenticateUser = (tokenResponse) => async(dispatch) => {
     }
 }
 
-export const getMessageList = (tokenResponse) => async(dispatch) => {
-    try{
+// export const getMessageList = (tokenResponse, nextPageToken) => async(dispatch) => {
+//     try{
+//         console.log(tokenResponse)
+//
+//         await axios.get(
+//             `https://gmail.googleapis.com/gmail/v1/users/me/messages`,
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${tokenResponse.access_token}`,
+//                     Accept: 'application/json',
+//                 },
+//                 params: {
+//                     maxResults: 13,
+//                     pageToken: nextPageToken || ''
+//                 },
+//             }
+//         ).then(async(response) => {
+//             // console.log("Fetching Messages response", response.data)
+//             await dispatch(setMessages(response.data))
+//             const messages = response.data.messages
+//             // console.log("dbsuaibdiaub", messages)
+//             console.log("Get Message List:" , response.data)
+//             dispatch(setNextPageToken(response.data.nextPageToken))
+//
+//             messages.map((message) => {dispatch(getMessageObject(tokenResponse.access_token, message.id))})
+//
+//         }).catch((err) => console.log(err));
+//     }
+//     catch (error){
+//         console.log("Fetching Message List Failed", error)
+//     }
+// }
+
+export const getMessageList = (tokenResponse, nextPageToken, type) => async (dispatch) => {
+    try {
+        console.log(tokenResponse);
+
+        // Reset messageObjects before fetching new messages
+        dispatch(resetMessageObjects());
+
         await axios.get(
             `https://gmail.googleapis.com/gmail/v1/users/me/messages`,
             {
@@ -38,22 +85,32 @@ export const getMessageList = (tokenResponse) => async(dispatch) => {
                 },
                 params: {
                     maxResults: 5,
+                    pageToken: nextPageToken || '',
                 },
             }
-        ).then(async(response) => {
-            // console.log("Fetching Messages response", response.data)
-            await dispatch(setMessages(response.data))
-            const messages = response.data.messages
+        ).then(async (response) => {
+            await dispatch(setMessages(response.data));
+            const messages = response.data.messages;
+            console.log("Get Message List:", response.data);
 
-            messages.map((message) => {dispatch(getMessageObject(tokenResponse.access_token, message.id))})
+            if(type === 'previous'){
+                dispatch(setPreviousPageToken())
+                console.log("PREVIOUS ")
+            }
+            else{
+                dispatch(setNextPageToken(response.data.nextPageToken));
+                console.log("NEXT")
+            }
 
+
+            messages.map((message) => {
+                dispatch(getMessageObject(tokenResponse.access_token, message.id));
+            });
         }).catch((err) => console.log(err));
+    } catch (error) {
+        console.log("Fetching Message List Failed", error);
     }
-    catch (error){
-        console.log("Fetching Message List Failed", error)
-    }
-}
-
+};
 
 export const getMessageObject = (token, id) => async (dispatch) => {
     try {
