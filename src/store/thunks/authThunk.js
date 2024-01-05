@@ -7,7 +7,6 @@ import {
     resetMessageObjects, setPreviousPageToken
 } from "../slices/authSlice";
 import axios from "axios";
-import {useSelector} from "react-redux";
 
 
 
@@ -21,6 +20,8 @@ export const authenticateUser = (tokenResponse) => async(dispatch) => {
                 },
             })
             .then(async (response) => {
+
+                window.localStorage.setItem("Token", JSON.stringify(tokenResponse))
 
 
                 console.log("Access Token ", tokenResponse.access_token)
@@ -36,48 +37,17 @@ export const authenticateUser = (tokenResponse) => async(dispatch) => {
     }
 }
 
-// export const getMessageList = (tokenResponse, nextPageToken) => async(dispatch) => {
-//     try{
-//         console.log(tokenResponse)
-//
-//         await axios.get(
-//             `https://gmail.googleapis.com/gmail/v1/users/me/messages`,
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${tokenResponse.access_token}`,
-//                     Accept: 'application/json',
-//                 },
-//                 params: {
-//                     maxResults: 13,
-//                     pageToken: nextPageToken || ''
-//                 },
-//             }
-//         ).then(async(response) => {
-//             // console.log("Fetching Messages response", response.data)
-//             await dispatch(setMessages(response.data))
-//             const messages = response.data.messages
-//             // console.log("dbsuaibdiaub", messages)
-//             console.log("Get Message List:" , response.data)
-//             dispatch(setNextPageToken(response.data.nextPageToken))
-//
-//             messages.map((message) => {dispatch(getMessageObject(tokenResponse.access_token, message.id))})
-//
-//         }).catch((err) => console.log(err));
-//     }
-//     catch (error){
-//         console.log("Fetching Message List Failed", error)
-//     }
-// }
 
-export const getMessageList = (tokenResponse, nextPageToken, type) => async (dispatch) => {
+export const getMessageList = (tokenResponse, nextPageToken = "", type, label='INBOX') => async (dispatch) => {
     try {
-        console.log(tokenResponse);
+        console.log()
+        console.log("Called",tokenResponse);
 
         // Reset messageObjects before fetching new messages
         dispatch(resetMessageObjects());
 
         await axios.get(
-            `https://gmail.googleapis.com/gmail/v1/users/me/messages`,
+            `https://gmail.googleapis.com/gmail/v1/users/me/messages?labelIds=${label}`,
             {
                 headers: {
                     Authorization: `Bearer ${tokenResponse.access_token}`,
@@ -118,6 +88,7 @@ export const getMessageObject = (token, id) => async (dispatch) => {
             headers: {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/json',
+
             }
         }).then(async(response) => {
             await dispatch(setMessageObject(response.data))
@@ -128,3 +99,27 @@ export const getMessageObject = (token, id) => async (dispatch) => {
         console.log("Fetching Message List Failed", error)
     }
 }
+
+export const sendEmail = (token, recipient, subject, body,from) => async (dispatch) => {
+    try {
+        const requestBody = {
+            raw: window.btoa(
+                `From: ${from.given_name}\r\nTo: ${recipient}\r\nSubject: ${subject}\r\n\r\n${body}`
+            ),
+        };
+
+        await axios.post(
+            `https://gmail.googleapis.com/gmail/v1/users/me/messages/send`,
+            requestBody,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+    } catch (error) {
+        console.log("Sending Email Failed", error);
+    }
+};

@@ -16,20 +16,21 @@ function Login() {
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
+            console.log("Login Resoposne", codeResponse)
+            window.localStorage.setItem('Token', JSON.stringify(codeResponse));
             setTokenResponse(codeResponse);
             dispatch(setTokenObject(codeResponse))
 
-
         },
         onError: (error) => console.log('Login Failed:', error),
-        scope: 'https://www.googleapis.com/auth/gmail.readonly',
+        scope: process.env.REACT_APP_SEND_SCOPES,
     });
 
     useEffect(() => {
         console.log("Login Response: ",tokenResponse)
         if (tokenResponse) {
             dispatch(authenticateUser(tokenResponse))
-            dispatch(getMessageList(tokenResponse))
+            // dispatch(getMessageList(tokenResponse))
 
         }
     }, [tokenResponse, dispatch]);

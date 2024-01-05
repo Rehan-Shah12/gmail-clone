@@ -10,6 +10,8 @@ const Content = () => {
     const dispatch = useDispatch()
     const tokenResponse = useSelector((state) => (state.auth.tokenObject))
     const nextPageTokenArray = useSelector((state) => state.auth.nexPageToken)
+    const label = useSelector((state) => state.auth.label)
+
     const copiedArray = [...nextPageTokenArray]
     const [nextPageToken, setNextPageToken] = useState()
 
@@ -28,7 +30,8 @@ const Content = () => {
             console.log("NextTokenArray", nextPageTokenArray)
             const type = "next"
 
-            dispatch(getMessageList(tokenResponse, lastToken ,type));
+
+            dispatch(getMessageList(tokenResponse, lastToken ,type, label));
         }
     };
 

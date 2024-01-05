@@ -10,7 +10,8 @@ const authSlice = createSlice({
             messageObjects: [],
             showEmailContent: false,
             activeEmail: '',
-            nexPageToken: []
+            nexPageToken: [],
+            label: ''
         },
         reducers: {
             setTokenObject: (state,action) => {
@@ -41,6 +42,9 @@ const authSlice = createSlice({
             resetMessageObjects: (state) => {
                 state.messageObjects = [];
             },
+            setLabel: (state,action) => {
+                state.label = action.payload
+            }
         }
 })
 
